@@ -1,66 +1,64 @@
-// import React from 'react';
-// import { View, Text, Button, Image, StyleSheet } from 'react-native';
-// import { Colors } from '../constants/Colors';
-// import ImagePicker from 'react-native-image-picker';
+import React, { useState } from 'react';
+import { View, Text, Button, Image, StyleSheet } from 'react-native';
+import { Colors } from '../constants/Colors';
+import ImagePicker from 'react-native-image-picker';
 
-// const styles = StyleSheet.create({
-//     imagePicker: {
-//         alignItems: 'center',
-//     },
-//     imagePreview: {
-//         width: '100%',
-//         height: 200,
-//         marginBottom: 10,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         borderColor: Colors.ligthGray,
-//         borderWidth: 1,
-//     },
-//     image: {
-//         width: '100%',
-//         height: '100%',
-//     },
-// });
+const styles = StyleSheet.create({
+    imagePicker: {
+        alignItems: 'center',
+    },
+    imagePreview: {
+        width: '100%',
+        height: 200,
+        marginBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: Colors.ligthGray,
+        borderWidth: 1,
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
+});
 
-// const ImgPicker = () => {
+const ImgPicker = () => {
 
-//     const options = {
-//         tintColor: Colors.primary,
-//         storageOptions: {
-//             skipBackup: true,
-//             path: 'images',
-//         },
-//     }
+    const [ pickedImage, setPickedImage ] = useState();
 
-//     const takeImageHandler = () => {
-//         ImagePicker.launchCamera(options, (response) => {
-//             console.log('Response = ', response);
+    const options = {
+        tintColor: Colors.primary,
+        customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+        noData: true,
+        quality: 0.5,
+    }
 
-//             if (response.didCancel) {
-//             console.log('User cancelled image picker');
-//             } else if (response.error) {
-//             console.log('ImagePicker Error: ', response.error);
-//             } else if (response.customButton) {
-//             console.log('User tapped custom button: ', response.customButton);
-//             } else {
-//                 console.log(response.uri);
-//             }
-//         });
-//     }
+    const takeImageHandler = () => {
+        ImagePicker.launchCamera(options, (response) => {
+            setPickedImage(response.uri);
+        });
+    }
 
-//     return (
-//         <View style={styles.imagePicker}>
-//             <View style={styles.imagePreview}>
-//                 <Text> No image picked yet . </Text>
-//                 <Image style={styles.image} />
-//             </View>
-//             <Button
-//                 title="Take picture"
-//                 color={Colors.primary}
-//                 onPress={takeImageHandler}
-//             />
-//         </View>
-//     )
-// }
+    return (
+        <View style={styles.imagePicker}>
+            <View style={styles.imagePreview}>
+                {pickedImage ? (
+                    <Image style={styles.image} source={{uri : pickedImage}} />
+                ) : (
+                    <Text> No image picked yet . </Text>
+                )}                
+            </View>
+            <Button
+                title="Take picture"
+                color={Colors.primary}
+                onPress={takeImageHandler}
+            />
+        </View>
+    )
+}
 
-// export default ImgPicker;
+export default ImgPicker;

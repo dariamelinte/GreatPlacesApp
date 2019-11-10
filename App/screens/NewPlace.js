@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, ScrollView,  StyleSheet } from 'react-na
 import { useDispatch } from 'react-redux';
 import { Colors } from '../constants/Colors';
 import * as placesAction from '../store/places-actions';
-// import ImagePicker from '../components/ImagePicker';
+import ImagePicker from '../components/ImagePicker';
 
 const styles = StyleSheet.create({
     form: {
@@ -39,7 +39,7 @@ const NewPlaces = ({ navigation }) => {
                     onChangeText={(value) => setTitleValue(value)}
                     multiline
                 /> 
-                {/* <ImagePicker /> */}
+                <ImagePicker />
                 <Button
                     title="Save Place"
                     color={Colors.primary}
