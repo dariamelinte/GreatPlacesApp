@@ -6,6 +6,8 @@ import ImagePicker from 'react-native-image-picker';
 const styles = StyleSheet.create({
     imagePicker: {
         alignItems: 'center',
+        marginBottom: 15,
+        width: '100%',
     },
     imagePreview: {
         width: '100%',
@@ -20,9 +22,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
+    imageButton: {
+        width: '100%',
+    }
 });
 
-const ImgPicker = () => {
+const ImgPicker = ({ onImageTaken }) => {
 
     const [ pickedImage, setPickedImage ] = useState();
 
@@ -40,6 +45,7 @@ const ImgPicker = () => {
     const takeImageHandler = () => {
         ImagePicker.launchCamera(options, (response) => {
             setPickedImage(response.uri);
+            onImageTaken(response.uri);
         });
     }
 
@@ -56,6 +62,8 @@ const ImgPicker = () => {
                 title="Take picture"
                 color={Colors.primary}
                 onPress={takeImageHandler}
+                style={styles.imageButton}
+                width="100vw"
             />
         </View>
     )

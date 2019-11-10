@@ -11,10 +11,11 @@ const styles = StyleSheet.create({
 
 const PlacesList = ({navigation}) => {
     const places = useSelector(state => state.places.places);
-    const onSelect = (placeId, placeTitle) => {
+    const onSelect = (placeId, placeTitle, placeImage) => {
         navigation.navigate('PlaceDetail', {
             placeTitle,
             placeId,
+            placeImage
         });
     }
     return (
@@ -24,7 +25,7 @@ const PlacesList = ({navigation}) => {
             renderItem={({item}) => (
                 <PlaceItem
                     item={item}
-                    onSelect={() => onSelect(item.id, item.title)}
+                    onSelect={() => onSelect(item.id, item.title, item.image)}
                 />
             )}
         />

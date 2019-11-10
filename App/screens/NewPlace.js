@@ -25,9 +25,11 @@ const styles = StyleSheet.create({
 
 const NewPlaces = ({ navigation }) => {
     const [titleValue, setTitleValue] = useState('');
+    const [selectedImage, setSelectedImage] = useState();
+
     const dispatch = useDispatch();
     const savePlaceHandler = () => {
-        dispatch(placesAction.addPlace(titleValue));
+        dispatch(placesAction.addPlace(titleValue, selectedImage));
         navigation.goBack();
     }
     return (
@@ -39,7 +41,9 @@ const NewPlaces = ({ navigation }) => {
                     onChangeText={(value) => setTitleValue(value)}
                     multiline
                 /> 
-                <ImagePicker />
+                <ImagePicker
+                    onImageTaken={(imagePath) => setSelectedImage(imagePath)}
+                />
                 <Button
                     title="Save Place"
                     color={Colors.primary}

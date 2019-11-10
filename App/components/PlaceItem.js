@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
 
 const PlaceItem = ({ item, onSelect }) => {
     const { title, address, image } = item;
-    console.log('title PlaceItem', title);
     return (
         <TouchableOpacity onPress={onSelect} style={styles.placeItem}>
             <Image style={styles.image} source={{ uri: image }} />
@@ -58,7 +57,6 @@ PlaceItem.propTypes = {
 }
 
 PlaceItem.defaultProps = {
-    image: null,
     address: '',
 }
 
