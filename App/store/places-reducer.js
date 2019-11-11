@@ -12,7 +12,6 @@ export default (state = initialState, action) => {
     switch (type) {
         case ADD_PLACE: 
             const { title, image } = placeData;
-            console.log('place-reducer', image);
             const newPlace = new Place(
                 new Date().toString(),
                 title,

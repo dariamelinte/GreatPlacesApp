@@ -69,4 +69,8 @@ const ImgPicker = ({ onImageTaken }) => {
     )
 }
 
+ImgPicker.defaultProps = {
+    pickedImage: 'null'
+}
+
 export default ImgPicker;

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Colors } from '../constants/Colors';
 import * as placesAction from '../store/places-actions';
 import ImagePicker from '../components/ImagePicker';
+import LocationPicker from '../components/LocationPicker';
 
 const styles = StyleSheet.create({
     form: {
@@ -44,6 +45,7 @@ const NewPlaces = ({ navigation }) => {
                 <ImagePicker
                     onImageTaken={(imagePath) => setSelectedImage(imagePath)}
                 />
+                <LocationPicker />
                 <Button
                     title="Save Place"
                     color={Colors.primary}
