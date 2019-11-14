@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Button, Text, ActivityIndicator, Alert, StyleSheet } from 'react-native';
 import RNLocation from 'react-native-location';
 import { Colors } from '../constants/Colors';
@@ -22,9 +22,18 @@ const styles = StyleSheet.create({
     }
 });
 
-const LocationPicker = ({ navigation }) => {
+const LocationPicker = ({ navigation, onLocationPicked }) => {
     const [isFetching, setIsFetching] = useState(false);
     const [pickedLocation, setPickedLocation] = useState();
+    
+    const selectedLocation = navigation.getParam('selectedLocation');
+    
+    useEffect(() => {
+        if (selectedLocation) {
+            setPickedLocation(selectedLocation);
+            onLocationPicked(selectedLocation);
+        }
+    }, [selectedLocation, onLocationPicked]);
 
     const getLocationHandler = async () => {
         const hasAccepted = await RNLocation.requestPermission({
@@ -47,6 +56,10 @@ const LocationPicker = ({ navigation }) => {
                     latitude: location.latitude,
                     longitude: location.longitude
                 });
+                onLocationPicked({
+                    latitude: location.latitude,
+                    longitude: location.longitude
+                })
             } catch (err) {
                 console.log(err);
                 Alert.alert('Could not find a location .',

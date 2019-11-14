@@ -11,12 +11,8 @@ const styles = StyleSheet.create({
 
 const PlacesList = ({navigation}) => {
     const places = useSelector(state => state.places.places);
-    const onSelect = (placeId, placeTitle, placeImage) => {
-        navigation.navigate('PlaceDetail', {
-            placeTitle,
-            placeId,
-            placeImage
-        });
+    const onSelect = (item) => {
+        navigation.navigate('PlaceDetail', { ...item });
     }
     return (
         <FlatList
@@ -25,7 +21,7 @@ const PlacesList = ({navigation}) => {
             renderItem={({item}) => (
                 <PlaceItem
                     item={item}
-                    onSelect={() => onSelect(item.id, item.title, item.image)}
+                    onSelect={() => onSelect(item)}
                 />
             )}
         />

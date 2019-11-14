@@ -11,11 +11,14 @@ export default (state = initialState, action) => {
     const { type, placeData } = action;
     switch (type) {
         case ADD_PLACE: 
-            const { title, image } = placeData;
+            const { title, image, address, latitude, longitude } = placeData;
             const newPlace = new Place(
                 new Date().toString(),
                 title,
                 image,
+                address,
+                latitude,
+                longitude                
             );
             return {
                 ...state,

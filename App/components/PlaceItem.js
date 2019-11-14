@@ -58,6 +58,7 @@ PlaceItem.propTypes = {
 
 PlaceItem.defaultProps = {
     address: '',
+    image: null
 }
 
 export default PlaceItem;

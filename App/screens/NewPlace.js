@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, TextInput, Button, ScrollView,  StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Colors } from '../constants/Colors';
@@ -27,12 +27,16 @@ const styles = StyleSheet.create({
 const NewPlaces = ({ navigation }) => {
     const [titleValue, setTitleValue] = useState('');
     const [selectedImage, setSelectedImage] = useState();
+    const [selectedLocation, setSelectedLocation] = useState();
 
     const dispatch = useDispatch();
     const savePlaceHandler = () => {
-        dispatch(placesAction.addPlace(titleValue, selectedImage));
+        dispatch(placesAction.addPlace(titleValue, selectedImage, selectedLocation));
         navigation.goBack();
     }
+    const onLocationPicked = useCallback((location) => {
+        setSelectedLocation(location);
+    }, []);
     return (
         <ScrollView>
             <View style={styles.form }>
@@ -47,6 +51,7 @@ const NewPlaces = ({ navigation }) => {
                 />
                 <LocationPicker
                     navigation={navigation}
+                    onLocationPicked={onLocationPicked}
                 />
                 <Button
                     title="Save Place"
