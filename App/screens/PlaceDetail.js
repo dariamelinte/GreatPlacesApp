@@ -1,20 +1,89 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
+import MapPreview from '../components/MapPreview';
+import { Colors } from '../constants/Colors';
 
 const styles = StyleSheet.create({
-    
-});
+    container: {
+        alignItems: 'center'
+    },
+    image: {
+        height: '35%',
+        minHeight: 300,
+        width: '100%',
+        backgroundColor: Colors.ligthGray
+    },
+    locationContainer: {
+        marginVertical: 20,
+        width: '90%',
+        maxWidth: 350,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: Colors.black,
+        shadowOpacity: 0.26,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+        elevation: 5,
+        backgroundColor: Colors.white,
+        borderRadius: 10
+    },
+    addressContainer: {
+        padding: 20
+    },
+    address: {
+        color: Colors.primary,
+        textAlign: 'center'
+    },
+    mapPreview: {
+        width: '100%',
+        maxWidth: 350,
+        height: 300,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10
+    }
+});  
 
-const PlaceDetail = () => {
-   return (
-       <View>
-           <Text> Place Detail Screen </Text>
-       </View>
-   );
+const PlaceDetail = ({ navigation }) => {
+    const placeId = navigation.getParam('id');
+    const selectedPlace = useSelector(state => 
+        state.places.places.find(place => place.id === placeId)
+    );
+    const { imageUri, latitude, longitude, address } = selectedPlace;
+
+    const selectedLocation = { latitude, longitude };
+
+    const showMapHandler = () => {
+        navigation.navigate('Map', {
+            readonly: true,
+            initialLocation: selectedLocation
+        });
+    }
+
+    return (
+        <ScrollView contentContainerStyle={styles.container}>
+            <Image
+                source={imageUri}
+                style={styles.image}
+            />
+            <View style={styles.locationContainer }>
+                <View style={styles.addressContainer}>
+                    <Text style={styles.address}>
+                        { address }
+                    </Text>
+                </View>                
+                <MapPreview
+                    style={styles.mapPreview}
+                    location={selectedLocation }
+                    onPress={showMapHandler}
+                />
+            </View>
+        </ScrollView>
+    );
 }
 
 PlaceDetail.navigationOptions = ({navigation}) => ({
-    headerTitle: navigation.getParam('placeTitle'),
+    headerTitle: navigation.getParam('title'),
 })
 
 export default PlaceDetail;
